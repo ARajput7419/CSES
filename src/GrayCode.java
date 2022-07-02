@@ -1,7 +1,8 @@
 import java.io.*;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class TwoSets {
+public class GrayCode {
 
 
     final static class Reader {
@@ -119,51 +120,42 @@ public class TwoSets {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-     Reader reader = new Reader();
-     Writer writer = new Writer();
-     long n = reader.nextInt();
-     long j = n;
-     long x = (n*(n+1));
-     boolean [] taken = new boolean[(int)n+1];
-     if (x%4==0) {
-         long target = x/4;
-         writer.println("YES");
-         for (;target!=0;)
-         {
-             if (target<j){
-                 taken[(int)target]=true;
-                 break;
-             }
-             else{
-                 taken[(int)j]=true;
-                 target-=j;
-             }
-             j--;
-         }
-         int firstSet = 0;
-         for (int i = 1;i<=n;i++)
-         {
-             if (!taken[i]) firstSet++;
-         }
-         writer.println(firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (!taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-         writer.println(n-firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-     }
-     else
-         writer.println("NO");
 
-
-     writer.close();
-
+    private static String bits(int value , int n){
+        StringBuilder builder = new StringBuilder();
+        for ( int i = 0 ; i < n ; i++ ){
+            builder.insert(0,(char)((value&1)+48));
+            value>>>=1;
+        }
+        return builder.toString();
     }
 
+    public static void main(String[] args) throws IOException {
+        Reader reader = new Reader();
+        Writer writer = new Writer();
+        int n = reader.nextInt();
+        int current = 0;
+        HashSet<Integer> set  = new HashSet<>();
+        set.add(0);
+        while(true){
+                writer.println(bits(current,n));
+                int prev = current;
+                for (int i = 0; i < n; i++) {
+                    int temp = current^(1<<i);
+                    if(!set.contains(temp))
+                    {
+                        set.add(temp);
+                        current = temp;
+                        break;
+                    }
 
+                }
+                if (current == prev)
+                    break;
+
+        }
+        writer.close();
+
+
+    }
 }

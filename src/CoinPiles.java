@@ -1,8 +1,7 @@
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class TwoSets {
-
+public class CoinPiles {
 
     final static class Reader {
         BufferedReader reader;
@@ -118,52 +117,22 @@ public class TwoSets {
             writer.close();
         }
     }
-
     public static void main(String[] args) throws IOException {
-     Reader reader = new Reader();
-     Writer writer = new Writer();
-     long n = reader.nextInt();
-     long j = n;
-     long x = (n*(n+1));
-     boolean [] taken = new boolean[(int)n+1];
-     if (x%4==0) {
-         long target = x/4;
-         writer.println("YES");
-         for (;target!=0;)
-         {
-             if (target<j){
-                 taken[(int)target]=true;
-                 break;
-             }
-             else{
-                 taken[(int)j]=true;
-                 target-=j;
-             }
-             j--;
-         }
-         int firstSet = 0;
-         for (int i = 1;i<=n;i++)
-         {
-             if (!taken[i]) firstSet++;
-         }
-         writer.println(firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (!taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-         writer.println(n-firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-     }
-     else
-         writer.println("NO");
+        Writer writer = new Writer();
+        Reader reader = new Reader();
+        int t = reader.nextInt();
+        while (t-->0){
+            long m = reader.nextInt();
+            long n = reader.nextInt();
+            long l = 2*m-n;
+            long k = 2*n-m;
+            if (l%3==0 && k%3==0 && l>=0 &&k>=0)
+                writer.println("YES");
+            else
+                writer.println("NO");
+        }
+        writer.close();
 
-
-     writer.close();
 
     }
-
-
 }

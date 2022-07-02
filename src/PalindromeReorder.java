@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class TwoSets {
+public class PalindromeReorder {
 
 
     final static class Reader {
@@ -119,51 +119,39 @@ public class TwoSets {
         }
     }
 
+
     public static void main(String[] args) throws IOException {
-     Reader reader = new Reader();
-     Writer writer = new Writer();
-     long n = reader.nextInt();
-     long j = n;
-     long x = (n*(n+1));
-     boolean [] taken = new boolean[(int)n+1];
-     if (x%4==0) {
-         long target = x/4;
-         writer.println("YES");
-         for (;target!=0;)
-         {
-             if (target<j){
-                 taken[(int)target]=true;
-                 break;
-             }
-             else{
-                 taken[(int)j]=true;
-                 target-=j;
-             }
-             j--;
-         }
-         int firstSet = 0;
-         for (int i = 1;i<=n;i++)
-         {
-             if (!taken[i]) firstSet++;
-         }
-         writer.println(firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (!taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-         writer.println(n-firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-     }
-     else
-         writer.println("NO");
+        Reader reader = new Reader();
+        Writer writer = new Writer();
+        String data = reader.next();
+        int [] count = new int[26];
+        for (char c:data.toCharArray())
+            count[c-65]++;
+        int sum=0;
+        for (int c:count) sum+=c%2;
+        char [] result = new char[data.length()];
+        if (sum>1){
+            writer.println("NO SOLUTION");
+        }
+        else
+        {
 
-
-     writer.close();
-
+            int left = 0;
+            int right = result.length-1;
+            for (int i=0;i<26;i++){
+                if (count[i] % 2 != 0) {
+                    result[data.length() / 2] = (char) (i + 65);
+                    count[i] -= 1;
+                }
+                while (count[i] > 0) {
+                    result[right] = result[left] = (char) (i + 65);
+                    left++;
+                    right--;
+                    count[i] -= 2;
+                }
+            }
+        }
+       writer.println(new String(result));
+        writer.close();
     }
-
-
 }

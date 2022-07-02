@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class TwoSets {
+public class BitStrings {
 
 
     final static class Reader {
@@ -122,48 +122,13 @@ public class TwoSets {
     public static void main(String[] args) throws IOException {
      Reader reader = new Reader();
      Writer writer = new Writer();
-     long n = reader.nextInt();
-     long j = n;
-     long x = (n*(n+1));
-     boolean [] taken = new boolean[(int)n+1];
-     if (x%4==0) {
-         long target = x/4;
-         writer.println("YES");
-         for (;target!=0;)
-         {
-             if (target<j){
-                 taken[(int)target]=true;
-                 break;
-             }
-             else{
-                 taken[(int)j]=true;
-                 target-=j;
-             }
-             j--;
-         }
-         int firstSet = 0;
-         for (int i = 1;i<=n;i++)
-         {
-             if (!taken[i]) firstSet++;
-         }
-         writer.println(firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (!taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-         writer.println(n-firstSet);
-         for (int i = 1 ; i<=n ; i++) {
-             if (taken[i]) writer.print(i + " ");
-         }
-         writer.println("");
-     }
-     else
-         writer.println("NO");
-
-
+     int n = reader.nextInt();
+     int mod = 1_00_00_00_00_7;
+     int res = 1;
+     for (int  i = 0;i<n;i++)
+         res=(res*2)%mod;
+     writer.println(res);
      writer.close();
 
     }
-
-
 }
